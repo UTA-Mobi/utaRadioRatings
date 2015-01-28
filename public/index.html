@@ -1,0 +1,114 @@
+
+<html>
+  <head>
+    <title>My ParseApp site</title>
+    <style>
+    body { font-family: Helvetica, Arial, sans-serif; }
+    #div { width: 800px;  margin: 40px auto; padding: 20px; border: 2px solid #5298fc; }
+    h1 { font-size: 30px; margin: 0; }
+    p { margin: 40px 0; }
+    em { font-family: monospace; }
+    a { color: #5298fc; text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <div>
+    <center><h1>UTA Radio Ratings</h1></center>
+      <div id="div">
+      <table id="likedRatings" style="width:100%">
+        <tr ><td style="padding-bottom:5px" colspan='3'><center>Most liked Songs</center></td></tr>
+        <tr>
+          <td>Song Name  </td>
+          <td>Artist Name</td>
+          <td>Ratings    </td>
+        </tr>
+      </table>
+      </div>
+    <br><br><br>
+      <div id="div">
+      <table id='dislikedRatings' style="width:100%">
+        <tr><td style="padding-bottom:5px" colspan='3'><center>Most Disliked Songs </center></td></tr>
+        <tr>
+          <td>Song Name  </td>
+          <td>Artist Name</td>
+          <td>Ratings    </td>
+        </tr>
+      </table>
+      </div>
+      <center><button id='refresh'>refresh</button></center>
+    </div>
+
+
+
+
+
+    <script src='./js/parseSDK.js'></script>
+    <script src='./js/jquery.js'></script>
+    <script>
+
+    //potentially add in refresh button
+    
+    Parse.initialize("5qlRd6jeJWmm6mnixs64t4RWPG6cX6z9wt2heHpS", "0DQWZK3rXlsUncSoAVfL2ckj64khVOy5TJobzKIq");
+    var ratingsTable = Parse.Object.extend('Ratings');
+    var ratingsQuery = new Parse.Query(ratingsTable);
+    var rows = '';
+    var artistName='';
+    var songName='';
+
+    ratingsQuery.descending('rating');
+    ratingsQuery.limit(10);
+
+    ratingsQuery.find({
+      success: function(results){
+        for(var i = 0 ; i < results.length ; i++){
+          if(results[i].get('songName').length==""){
+            songName='n/a'
+          }
+          else{
+            songName=results[i].get('songName');
+          }
+          if(results[i].get('artistName').length==""){
+            artistName='n/a'
+          }
+          else{
+            artistName=results[i].get('songName');
+          }
+          rows = "<tr><td>" + songName + "</td><td> " + artistName +  "</td><td>" + results[i].get('rating');
+          $('#likedRatings').append(rows);
+        }
+      },
+      error : function(error){
+        console.log("error: "+error.code+" "+error.message);
+      }
+    });
+
+    ratingsQuery.ascending('rating');
+
+    ratingsQuery.find({
+      success: function(results){
+        for(var i = 0 ; i < results.length ; i++){
+          if(results[i].get('songName').length==""){
+            songName='n/a'
+          }
+          else{
+            songName=results[i].get('songName');
+          }
+          if(results[i].get('artistName').length==""){
+            artistName='n/a'
+          }
+          else{
+            artistName=results[i].get('songName');
+          }
+          rows = "<tr><td>" + songName + "</td><td> " + artistName +  "</td><td>" + results[i].get('rating');
+          $('#dislikedRatings').append(rows);
+        }
+        
+      },
+      error : function(error){
+        console.log("error: "+error.code+" "+error.message);
+      }
+    });
+
+     </script>
+  </body>
+</html>
