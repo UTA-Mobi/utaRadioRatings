@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "UTARadio2": {
+            "applicationId": "5qlRd6jeJWmm6mnixs64t4RWPG6cX6z9wt2heHpS", 
+            "masterKey": "NFv2ZF6NfYptBeOzFfK65PaVNFNdIoEbLFHIEyI1"
+        }, 
+        "_default": {
+            "link": "UTARadio2"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.3.3"
+    }
+}
